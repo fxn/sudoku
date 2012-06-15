@@ -2,7 +2,7 @@ This is a fairly simple Sudoku solver written in C. An exercise in bactracking I
 
 The backtracking loop is compact, it is kind of generic to many backtracking problems I believe.
 
-Cells store integers, but there are extra containers for rows, columns, and the nine sub-squares that maintain some bit masks. They allow the program to check stuff using bitwise operators, which proved to be a fast approach compared to other options.
+There is a matrix that stores the numbers, and there are redundant structures for rows, columns, and the nine sub-squares that maintain bit masks. They allow the program to check stuff using bitwise operators, which proved to be a fast approach compared to other options.
 
 Other than that, the program is not very smart, just brute force backtracking with the obvious optimizations.
 
