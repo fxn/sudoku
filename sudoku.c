@@ -9,36 +9,35 @@ void init_known(size_t count, char** cells);
 bool is_available(int i, int j, int n);
 bool advance_cell(int i, int j);
 void solve_sudoku(void);
-void init_globals(void);
-void* xcalloc(size_t count, size_t size);
+void init_bits(void);
 void print_matrix(void);
 void print_separator(void);
 
 /* The Sudoku matrix itself. */
-int** matrix = NULL;
+int matrix[9][9];
 
 /* Which numbers were given as known in the problem. */
-int** known = NULL;
+int known[9][9];
 
 /* An array of nine integers, each of one representing a sub-square.
 Each integer has its nth-bit on iff n belongs to the corresponding sub-square. */
-int* squares = NULL;
+int squares[9];
 
 /* An array of nine integers, each of one representing a row.
 Each integer has its nth-bit on iff n belongs to the corresponding row. */
-int* rows = NULL;
+int rows[9];
 
 /* An array of nine integers, each of one representing a column.
 Each integer has its nth-bit on iff n belongs to the corresponding column. */
-int* cols = NULL;
+int cols[9];
 
 /* An array with some powers of 2 to avoid shifting all the time. */
-int* bits = NULL;
+int bits[10];
 
 
 int main(int argc, char** argv)
 {
-    init_globals();
+    init_bits();
     init_known(argc-1, argv+1);
 
     solve_sudoku();
@@ -139,35 +138,12 @@ void solve_sudoku(void)
     }
 }
 
-/* Allocates memory and stuff. */
-void init_globals(void)
+/* Initializes the array with powers of 2. */
+void init_bits(void)
 {
-    matrix = xcalloc(9, sizeof(int*));
-    known  = xcalloc(9, sizeof(int*));
-    for (int i = 0; i < 9; i++) {
-        matrix[i] = xcalloc(9, sizeof(int));
-        known[i]  = xcalloc(9, sizeof(int));
-    }
-
-    squares = xcalloc(9, sizeof(int));
-    rows = xcalloc(9, sizeof(int));
-    cols = xcalloc(9, sizeof(int));
-
-    bits = xcalloc(10, sizeof(int));
     for (int n = 1; n < 10; n++) {
         bits[n] = 1 << n;
     }
-}
-
-void* xcalloc(size_t count, size_t size)
-{
-    void* p;
-    p = calloc(count, size);
-    if (p == NULL) {
-        perror("Memory allocation failure");
-        exit(EXIT_FAILURE);
-    }
-    return p;
 }
 
 /* Prints the matrix using some ANSI escape sequences
