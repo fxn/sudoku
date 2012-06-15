@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+int square(int i, int j);
 void set_cell(int i, int j, int n);
 int clear_cell(int i, int j);
 void init_known(size_t count, char** cells);
@@ -46,6 +47,11 @@ int main(int argc, char** argv)
     return EXIT_SUCCESS;
 }
 
+/* Returns the index of the square the cell (i, j) belongs to. */
+int square(int i, int j)
+{
+    return (i/3)*3 + j/3;
+}
 
 /* Stores the number n in the cell (i, j), and turns on the corresponding
 bits in rows, cols, and squares. */
@@ -54,7 +60,7 @@ void set_cell(int i, int j, int n)
     matrix[i][j] = n;
     rows[i] |= bits[n];
     cols[j] |= bits[n];
-    squares[(i/3)*3 + j/3] |= bits[n];
+    squares[square(i, j)] |= bits[n];
 }
 
 /* Clears the cell (i, j) and turns off the corresponding bits in rows, cols,
@@ -65,7 +71,7 @@ int clear_cell(int i, int j)
     matrix[i][j] = 0;
     rows[i] &= ~bits[n];
     cols[j] &= ~bits[n];
-    squares[(i/3)*3 + j/3] &= ~bits[n];
+    squares[square(i, j)] &= ~bits[n];
     return n;
 }
 
@@ -92,7 +98,7 @@ bool is_available(int i, int j, int n)
 {
     return (rows[i] & bits[n]) == 0 &&
            (cols[j] & bits[n]) == 0 &&
-           (squares[(i/3)*3 + j/3] & bits[n]) == 0;
+           (squares[square(i, j)] & bits[n]) == 0;
 }
 
 /* Tries to fill the cell (i, j) with the next available number.
