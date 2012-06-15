@@ -19,15 +19,15 @@ int matrix[9][9];
 /* Which numbers were given as known in the problem. */
 int known[9][9];
 
-/* An array of nine integers, each of one representing a sub-square.
+/* An array of nine integers, each of which representing a sub-square.
 Each integer has its nth-bit on iff n belongs to the corresponding sub-square. */
 int squares[9];
 
-/* An array of nine integers, each of one representing a row.
+/* An array of nine integers, each of which representing a row.
 Each integer has its nth-bit on iff n belongs to the corresponding row. */
 int rows[9];
 
-/* An array of nine integers, each of one representing a column.
+/* An array of nine integers, each of which representing a column.
 Each integer has its nth-bit on iff n belongs to the corresponding column. */
 int cols[9];
 
