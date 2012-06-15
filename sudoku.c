@@ -95,9 +95,7 @@ void init_known(size_t count, char** cells)
 /* Can we put n in the cell (i, j)? */
 bool is_available(int i, int j, int n)
 {
-    return (rows[i] & bits[n]) == 0 &&
-           (cols[j] & bits[n]) == 0 &&
-           (squares[square(i, j)] & bits[n]) == 0;
+    return (rows[i] & bits[n]) == 0 && (cols[j] & bits[n]) == 0 && (squares[square(i, j)] & bits[n]) == 0;
 }
 
 /* Tries to fill the cell (i, j) with the next available number.
